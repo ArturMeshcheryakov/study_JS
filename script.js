@@ -21,3 +21,4 @@ console.log(addExpenses);
 budgetDay = money / 30;
 
 console.log(budgetDay);
+
