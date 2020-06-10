@@ -78,7 +78,6 @@ showTypeOf(deposit);
 console.log('Расходы за месяц: ' + expensesAmount);
 console.log('Возможные расходы: ' + addExpenses);
 
-
 if (getTargetMonth() < 0) {
   console.log('Цель не будет достигнута');
 } else {
