@@ -2,26 +2,7 @@
 
 
 //1
-let isNumber = function (n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-};
-
-let arr = [];
-
-for (let i = 0; i < 7; i++) {
-  let number;
-
-  do {
-    number = prompt('Введите число');
-
-    if (isNumber(number)) {
-      arr[i] = number;
-    } else {
-      alert('нужно ввести число!');
-    }
-  } while (!isNumber(number));
-}
-
+let arr = ['1234','2345','3456','4567','213','23445436','566456546'];
 
 for (let i = 0; i < arr.length; i++) {
   let strFirst;
