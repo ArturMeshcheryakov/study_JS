@@ -63,6 +63,12 @@ let appData = {
     expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesAdd);
     expensesItems = document.querySelectorAll('.expenses-items');
 
+    let cloneExpensesItemInput = cloneExpensesItem.querySelectorAll('input');
+    cloneExpensesItemInput.forEach(function (item) {
+      appData.checkInput();
+      item.value = '';
+    });
+
     if (expensesItems.length === 3) {
       expensesAdd.style.display = 'none';
     }
@@ -82,6 +88,12 @@ let appData = {
 
     incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomeAdd);
     incomeItems = document.querySelectorAll('.income-items');
+
+    let cloneIncomeItemInput = cloneIncomeItem.querySelectorAll('input');
+    cloneIncomeItemInput.forEach(function (item) {
+      appData.checkInput();
+      item.value = '';
+    });
 
     if (incomeItems.length === 3) {
       incomeAdd.style.display = 'none';
@@ -175,6 +187,23 @@ let appData = {
     document.querySelector('.period-amount').innerHTML = periodSelect.value;
     incomePeriodValue.value = appData.calcPeriod();
   },
+  checkNumber: function (event) {
+    if (event.charCode && (event.charCode < 48 || event.charCode > 57)) return false;
+  },
+  checkString: function (event) {
+    let str = event.key;
+    if (!str.replace(/[^а-яА-ЯёЁ.,():"'|;\-]/g, '')) return false;
+  },
+  checkInput: function () {
+    document.querySelectorAll('input').forEach(function (item) {
+      if (item.getAttribute('placeholder') === 'Сумма') {
+        item.onkeypress = appData.checkNumber;
+      }
+      if (item.getAttribute('placeholder') === 'Наименование') {
+        item.onkeypress = appData.checkString;
+      }
+    });
+  },
   addExpensesCase: function (data) {
     let arr = [];
 
@@ -199,5 +228,6 @@ start.addEventListener('click', appData.start);
 expensesAdd.addEventListener('click', appData.expensesAdd);
 incomeAdd.addEventListener('click', appData.incomeAdd);
 periodSelect.addEventListener('input', appData.changeRange);
+appData.checkInput();
 
 // console.log(appData.getStatusIncome());
