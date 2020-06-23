@@ -295,7 +295,7 @@ let appData = {
     }
 
     if (expensesItems.length === 3) {
-      expensesItems.style.display = 'block';
+      expensesAdd.style.display = 'block';
     }
 
     this.replaceBtn2();
@@ -323,4 +323,3 @@ incomeAdd.addEventListener('click', appData.incomeAdd.bind(appData));
 periodSelect.addEventListener('input', appData.changeRange.bind(appData));
 cancel.addEventListener('click', appData.reset.bind(appData));
 appData.checkInput();
-
