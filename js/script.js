@@ -76,7 +76,9 @@ let appData = {
     let calcDataButtonAll = calcData.querySelectorAll('button');
 
     calcDataInputAll.forEach(function (item) {
-      item.disabled = true;
+      if (item.type !== 'range') {
+        item.disabled = true;
+      }
     });
 
     calcDataButtonAll.forEach(function (item) {
@@ -263,13 +265,13 @@ let appData = {
   reset: function () {
     let calc = document.querySelector('.calc');
     let calcInputAll = calc.querySelectorAll('input');
-    let calcBtnAll = calc.querySelectorAll('input');
+    let calcBtnAll = calc.querySelectorAll('button');
 
     calcInputAll.forEach(function (item) {
-
-      if(item.type === 'range'){
+      if (item.type === 'range') {
         item.value = 1;
-      }else{
+        document.querySelector('.period-amount').innerHTML = 1;
+      } else {
         item.value = '';
       }
 
@@ -280,10 +282,40 @@ let appData = {
       item.disabled = false;
     });
 
+    for(let i = 0; i < incomeItems.length; i++){
+      if(i !== 0) incomeItems[i].remove();
+    }
+
+    for(let i = 0; i < expensesItems.length; i++){
+      if(i !== 0) expensesItems[i].remove();
+    }
+
+    if (incomeItems.length === 3) {
+      incomeAdd.style.display = 'block';
+    }
+
+    if (expensesItems.length === 3) {
+      expensesItems.style.display = 'block';
+    }
+
     this.replaceBtn2();
     this.checkStart();
+
+    this.income = {};
+    this.addIncome = [];
+    this.expenses = {};
+    this.addExpenses = [];
+    this.deposit = false;
+    this.percentDeposit = 0;
+    this.moneyDeposit = 0;
+    this.budget = 0;
+    this.budgetDay = 0;
+    this.budgetMonth = 0;
+    this.expensesMonth = 0;
+    this.incomeMonth = 0;
   }
 };
+
 appData.checkStart();
 start.addEventListener('click', appData.start.bind(appData));
 expensesAdd.addEventListener('click', appData.expensesAdd.bind(appData));
@@ -291,3 +323,4 @@ incomeAdd.addEventListener('click', appData.incomeAdd.bind(appData));
 periodSelect.addEventListener('input', appData.changeRange.bind(appData));
 cancel.addEventListener('click', appData.reset.bind(appData));
 appData.checkInput();
+
