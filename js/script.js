@@ -295,7 +295,7 @@ let appData = {
     }
 
     if (expensesItems.length === 3) {
-      expensesItems.style.display = 'block';
+      expensesAdd.style.display = 'block';
     }
 
     this.replaceBtn2();
