@@ -208,18 +208,6 @@ class AppData {
     return Math.ceil(targetAmount.value / this.budgetMonth);
   }
 
-  getStatusIncome() {
-    let budgetDay = this.budgetDay;
-
-    if (budgetDay > 1200) return ('У вас высокий уровень дохода');
-    else if (budgetDay > 600 && budgetDay < 1200) return ('У вас средний уровень дохода');
-    else if (budgetDay < 0) return ('Что то пошло не так');
-    else if (budgetDay === 0) return ('Ваш доход 0');
-    else if (budgetDay < 600) return ('К сожалению у вас уровень дохода ниже среднего');
-    else if (budgetDay === 1200) return ('Ваш доход 1200');
-    else if (budgetDay === 600) return ('Ваш доход 600');
-  }
-
   calcPeriod() {
     return this.budgetMonth * periodSelect.value;
   }
@@ -247,17 +235,6 @@ class AppData {
         item.onkeypress = this.checkString;
       }
     });
-  }
-
-  addExpensesCase(data) {
-    let arr = [];
-
-    for (let i = 0; i < data.length; i++) {
-      let str = data[i].trim();
-      arr[i] = str[0].toUpperCase() + str.slice(1);
-    }
-
-    console.log(arr.join(', '));
   }
 
   reset() {
@@ -334,9 +311,15 @@ class AppData {
       depositPercent.value = '';
       depositPercent.style.display = 'inline-block';
 
-      depositPercent.onkeypress = function (event) {
-        if (!event.key.replace(/[^0-9+]/, '') || this.value.length > 1) return false;
-      };
+
+      depositPercent.addEventListener('input', function () {
+        if (this.value !== '') {
+          if (!isNumber(this.value) || (this.value < 1 || this.value > 100)) {
+            this.value = '';
+            alert("Введите корректное значение в поле проценты");
+          }
+        }
+      });
     } else {
       depositPercent.value = valueSelect;
       depositPercent.style.display = 'none';
@@ -352,6 +335,8 @@ class AppData {
     } else {
       depositBank.style.display = 'none';
       depositAmount.style.display = 'none';
+      depositPercent.style.display = 'none';
+      depositPercent.value = '';
       depositBank.value = '';
       depositAmount.value = '';
       this.deposit = false;
